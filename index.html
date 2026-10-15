@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gapiruvchi AI avatar</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b1a;--card:rgba(255,255,255,.08);--bd:rgba(255,255,255,.15);--tx:#f2f2fa;--mut:#a5a5c3;--ac:#8b5cf6;--ac2:#ec4899;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--tx);background:var(--bg);min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 15% 10%,#6d28d9aa,transparent),radial-gradient(500px 400px at 85% 25%,#db2777a0,transparent),radial-gradient(600px 500px at 50% 100%,#0ea5e980,transparent);animation:mv 12s ease-in-out infinite alternate}
+@keyframes mv{to{transform:scale(1.2) translateY(-25px)}}
+.wrap{max-width:560px;margin:0 auto;padding:14px}
+.stage{border-radius:22px;border:1px solid var(--bd);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));padding:10px 10px 14px;text-align:center;position:relative;overflow:hidden}
+.stage.live::after{content:"● JONLI";position:absolute;top:12px;right:14px;font-size:12px;color:#fff;background:#e11d48;padding:3px 9px;border-radius:99px;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.4}}
+svg{width:100%;max-width:340px;height:auto}
+#head{transform-origin:200px 330px;transition:transform .12s}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
+.sub{min-height:56px;font-size:18px;line-height:1.4;padding:6px 10px;color:var(--mut)}
+.sub b{color:#fff;background:linear-gradient(90deg,var(--ac),var(--ac2));padding:1px 6px;border-radius:6px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-top:12px;backdrop-filter:blur(12px)}
+textarea,select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--bd);background:rgba(0,0,0,.35);color:var(--tx);font:inherit}
+textarea{min-height:110px;resize:vertical}
+label{font-size:13px;color:var(--mut);display:block;margin:10px 0 4px}
+input[type=range]{width:100%}
+.btn{border:0;border-radius:12px;padding:13px;color:#fff;font:inherit;font-weight:600;cursor:pointer;background:linear-gradient(90deg,var(--ac),var(--ac2));width:100%;margin-top:12px}
+.btn.g{background:transparent;border:1px solid var(--bd)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sw{display:flex;gap:8px;margin-top:6px}.sw i{width:34px;height:34px;border-radius:50%;cursor:pointer;border:2px solid transparent}.sw i.on{border-color:#fff}
+.note{font-size:12px;color:var(--mut);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage" id="stage">
+    <svg viewBox="0 0 400 420" id="av">
+      <defs><linearGradient id="sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#4c1d95"/></linearGradient></defs>
+      <path d="M60 420 Q60 330 200 320 Q340 330 340 420Z" fill="url(#sh)"/>
+      <rect x="170" y="270" width="60" height="60" rx="20" fill="#e8b48f"/>
+      <g id="head">
+        <ellipse cx="200" cy="190" rx="105" ry="120" fill="#f1c4a1"/>
+        <path id="hair" d="M92 175 Q95 60 200 62 Q305 60 308 175 Q290 110 200 105 Q110 110 92 175Z" fill="#2b1d16"/>
+        <ellipse cx="94" cy="200" rx="14" ry="26" fill="#e8b48f"/><ellipse cx="306" cy="200" rx="14" ry="26" fill="#e8b48f"/>
+        <g id="brows" stroke="#2b1d16" stroke-width="7" stroke-linecap="round"><path d="M135 148 Q158 138 180 148"/><path d="M220 148 Q242 138 265 148"/></g>
+        <g><ellipse cx="157" cy="180" rx="19" ry="13" fill="#fff" class="eye"/><circle id="p1" cx="157" cy="180" r="8" fill="#2b1d16"/>
+        <ellipse cx="243" cy="180" rx="19" ry="13" fill="#fff" class="eye"/><circle id="p2" cx="243" cy="180" r="8" fill="#2b1d16"/></g>
+        <path d="M200 190 Q190 225 205 230" stroke="#d99a74" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="135" cy="235" rx="18" ry="10" fill="#f48fb1" opacity=".35"/><ellipse cx="265" cy="235" rx="18" ry="10" fill="#f48fb1" opacity=".35"/>
+        <ellipse id="mouth" cx="200" cy="270" rx="28" ry="4" fill="#7f1d1d" stroke="#5b1010" stroke-width="3"/>
+        <ellipse id="tongue" cx="200" cy="274" rx="14" ry="0" fill="#f87171"/>
+      </g>
+    </svg>
+    <div class="sub" id="sub">Matn yozing va "Gapirt" tugmasini bosing.</div>
+  </div>
+
+  <div class="card">
+    <label>Avatar gapiradigan matn</label>
+    <textarea id="txt">Assalomu alaykum! Men sizning sun'iy intellekt yordamchingizman. Bugun sizga qanday yordam bera olaman?</textarea>
+    <label>Ovoz</label><select id="voice"></select>
+    <div class="two">
+      <div><label>Tezlik</label><input type="range" id="rate" min=".6" max="1.5" step=".05" value="1"></div>
+      <div><label>Ovoz balandligi</label><input type="range" id="pitch" min=".5" max="1.8" step=".05" value="1"></div>
+    </div>
+    <label>Kiyim rangi</label>
+    <div class="sw" id="sw"></div>
+    <button class="btn" id="say">🗣 Gapirt</button>
+    <button class="btn g" id="stop">⏹ To'xtat</button>
+    <div class="note" id="note"></div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const synth=window.speechSynthesis;
+let voices=[],talking=false,iv=null,boost=0;
+
+function loadVoices(){
+  voices=synth?synth.getVoices():[];
+  const sel=$('voice');sel.innerHTML='';
+  const order=[...voices].sort((a,b)=>(/^uz/i.test(b.lang)-/^uz/i.test(a.lang))||(/^(tr|ru)/i.test(b.lang)-/^(tr|ru)/i.test(a.lang)));
+  order.forEach(v=>{const o=document.createElement('option');o.value=voices.indexOf(v);o.textContent=`${v.name} (${v.lang})`;sel.appendChild(o)});
+  const hasUz=voices.some(v=>/^uz/i.test(v.lang));
+  $('note').textContent=!voices.length?'Bu brauzerda ovoz topilmadi.':hasUz?"O'zbek ovozi topildi ✅":"Qurilmangizda o'zbek ovozi yo'q. Tur (tr) yoki rus (ru) ovozi o'zbekchani yaxshiroq o'qiydi. Telefon sozlamalaridan o'zbek ovozini yuklab olishingiz mumkin.";
+}
+if(synth){loadVoices();synth.onvoiceschanged=loadVoices}else{$('note').textContent="Bu ilovada ovoz yo'q. Ovoz uchun sahifani Chrome yoki Safari brauzerida oching."}
+
+// avatar animatsiyasi
+const mouth=$('mouth'),tongue=$('tongue'),head=$('head');
+function frame(open){
+  mouth.setAttribute('ry',3+open*30);mouth.setAttribute('rx',28+(open>.5?-6:4)+open*4);
+  tongue.setAttribute('ry',open>.45?open*10:0);
+  const t=Date.now()/1000;
+  const tilt=talking?Math.sin(t*3)*2.2+boost*1.5:Math.sin(t*.8)*.8;
+  head.style.transform=`rotate(${tilt}deg) translateY(${talking?Math.sin(t*5)*2:0}px)`;
+  $('brows').style.transform=`translateY(${boost*-5}px)`;
+  const dx=Math.sin(t*1.3)*4;
+  $('p1').setAttribute('cx',157+dx);$('p2').setAttribute('cx',243+dx);
+}
+let open=0;
+function loop(){
+  if(talking){const target=Math.random()<.25?.12:.25+Math.random()*.55+boost*.2;open+=(target-open)*.45;}
+  else open+=(0-open)*.35;
+  boost*=.85;frame(open);requestAnimationFrame(loop);
+}
+loop();
+
+// subtitr
+function renderSub(text,ci,len){
+  const s=$('sub');s.textContent='';
+  const a=text.slice(0,ci),b=text.slice(ci,ci+(len||1)),c=text.slice(ci+(len||1));
+  const vis=(a+b+c);
+  const from=Math.max(0,ci-60),to=Math.min(vis.length,ci+90);
+  s.append(document.createTextNode((from?'…':'')+a.slice(from)));
+  const bb=document.createElement('b');bb.textContent=b;s.appendChild(bb);
+  s.append(document.createTextNode(c.slice(0,to-ci-b.length)+(to<vis.length?'…':'')));
+}
+
+function speak(){
+  if(!synth){$('note').textContent="Claude ilovasida ovoz chiqmaydi. Ovoz uchun shu sahifani Chrome yoki Safari brauzerida oching. Hozir ovozsiz animatsiya ko'rsatilmoqda.";const t=$('txt').value.trim();if(!t)return;clearInterval(window._f);talking=true;$('stage').classList.add('live');let i=0;window._f=setInterval(()=>{boost=1;const m=t.slice(i).match(/^\S+\s*/);if(!m){clearInterval(window._f);talking=false;$('stage').classList.remove('live');return}renderSub(t,i,m[0].length);i+=m[0].length},380/+$('rate').value);return}
+  synth.cancel();
+  const text=$('txt').value.trim();if(!text)return;
+  const u=new SpeechSynthesisUtterance(text);
+  const v=voices[$('voice').value];if(v){u.voice=v;u.lang=v.lang}
+  u.rate=+$('rate').value;u.pitch=+$('pitch').value;
+  u.onstart=()=>{talking=true;$('stage').classList.add('live')};
+  u.onboundary=e=>{boost=1;renderSub(text,e.charIndex,e.charLength)};
+  const end=()=>{talking=false;$('stage').classList.remove('live');$('sub').textContent=text.slice(-120)};
+  u.onend=end;u.onerror=end;
+  renderSub(text,0,0);
+  synth.speak(u);
+}
+$('say').onclick=speak;
+$('stop').onclick=()=>{clearInterval(window._f);synth&&synth.cancel();talking=false;$('stage').classList.remove('live')};
+
+// rang tanlash
+['#8b5cf6','#0ea5e9','#10b981','#f59e0b','#ef4444'].forEach((c,i)=>{
+  const d=document.createElement('i');d.style.background=c;if(!i)d.className='on';
+  d.onclick=()=>{
+    document.querySelectorAll('#sw i').forEach(x=>x.classList.remove('on'));d.classList.add('on');
+    document.querySelector('#sh stop:first-child').setAttribute('stop-color',c);
+    document.querySelector('#sh stop:last-child').setAttribute('stop-color',c);
+    document.querySelector('#sh stop:last-child').setAttribute('stop-opacity','.6');
+  };
+  $('sw').appendChild(d);
+});
+</script>
+</body>
+</html>
